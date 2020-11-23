@@ -62,138 +62,222 @@ class _HomeState extends State<Home> {
     );
   }
 
+  int selectedRadio;
+  @override
+  void initState() {
+    super.initState();
+    selectedRadio = 0;
+  }
+
+  setSelecedRadio(int val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     const whatsapp = 'assets/whatsapp.svg';
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(
-            fontSize: 30,
-            fontFamily: 'Mclaren',
-            fontWeight: FontWeight.w400,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.directions_car)),
+              Tab(icon: Icon(Icons.directions_transit)),
+            ],
           ),
+          title: Text(
+            widget.title,
+            style: TextStyle(
+              fontSize: 30,
+              // fontFamily: 'Mclaren',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        child: Container(
-          height: size.height * 0.05,
-          child: Center(
-            child: Text(
-              'Developed by:    K T N',
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Mclaren',
-                fontWeight: FontWeight.bold,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
+          child: Container(
+            height: size.height * 0.05,
+            child: Center(
+              child: Text(
+                'Developed by:    K T N',
+                style: TextStyle(
+                  fontSize: 15,
+                  // fontFamily: 'Mclaren',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: size.width,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 20),
-                    child: Text('Enter Number to Start Chatting',
-                        style: TextStyle(
-                          fontFamily: 'Mclaren',
-                          fontSize: 30,
-                        )),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+        body: TabBarView(children: [
+          SingleChildScrollView(
+            child: Container(
+              width: size.width,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, left: 20, right: 20, bottom: 20),
+                child: Center(
+                  child: Column(
                     children: <Widget>[
-                      Text('Number'),
-                      TextField(
-                        onChanged: (String text) => _phone = text,
-                        autofocus: true,
-                        keyboardType: TextInputType.phone,
-                        maxLength: 10,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter phone number to Chat',
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Mclaren',
-                          fontWeight: FontWeight.w400,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 20),
+                        child: Text('Enter Number to Start Chatting',
+                            style: TextStyle(
+                              // fontFamily: 'Mclaren',
+                              fontSize: 30,
+                            )),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text('Number'),
+                          TextField(
+                            onChanged: (String text) => _phone = text,
+                            autofocus: true,
+                            keyboardType: TextInputType.phone,
+                            maxLength: 10,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Enter phone number to Chat',
+                            ),
+                            style: TextStyle(
+                              fontSize: 20,
+                              // fontFamily: 'Mclaren',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text('Message'),
+                          TextField(
+                            onChanged: (String text) => _message = text,
+                            autofocus: false,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Message (Optional)',
+                            ),
+                            style: TextStyle(
+                              fontSize: 20,
+                              // fontFamily: 'Mclaren',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      SizedBox(
+                        height: size.height * 0.1,
+                        width: size.width,
+                        child: Expanded(
+                          child: Container(
+                              color: Colors.purple.withOpacity(0.2),
+                              child: ButtonBar(
+                                  alignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    SvgPicture.asset(
+                                      whatsapp,
+                                      color: Colors.green,
+                                    ),
+                                    Radio(
+                                      value: 1,
+                                      groupValue: selectedRadio,
+                                      activeColor: Colors.green,
+                                      onChanged: (val) {
+                                        print('radio $val');
+                                        setSelecedRadio(val);
+                                      },
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/telegram.svg',
+                                    ),
+                                    Radio(
+                                      value: 2,
+                                      groupValue: selectedRadio,
+                                      activeColor: Colors.green,
+                                      onChanged: (val) {
+                                        print('radio $val');
+                                        setSelecedRadio(val);
+                                      },
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/telegram.svg',
+                                    ),
+                                    Radio(
+                                      value: 3,
+                                      groupValue: selectedRadio,
+                                      activeColor: Colors.green,
+                                      onChanged: (val) {
+                                        print('radio $val');
+                                        setSelecedRadio(val);
+                                      },
+                                    ),
+                                  ])),
                         ),
                       ),
-                      Text('Message'),
-                      TextField(
-                        onChanged: (String text) => _message = text,
-                        autofocus: false,
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Message (Optional)',
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      FlatButton.icon(
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.teal,
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
+                        onPressed: () {
+                          _phone.length == 10
+                              ? setState(() {
+                                  _launchInBrowser(
+                                      'https://wa.me/91$_phone?text=$_message');
+                                })
+                              : _showMyDialog();
+                        },
+                        color: Colors.teal.withOpacity(0.1),
+                        label: Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Text(
+                            'Click2Chat',
+                            style: TextStyle(
+                              fontSize: 30,
+                              // fontFamily: 'Mclaren',
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Mclaren',
-                          fontWeight: FontWeight.w400,
+                        icon: Padding(
+                          padding:
+                              EdgeInsets.only(top: 15, left: 10, bottom: 15),
+                          child: SvgPicture.asset(
+                            whatsapp,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  FlatButton.icon(
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Colors.teal,
-                        ),
-                        borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
-                      _phone.length == 10
-                          ? setState(() {
-                              _launchInBrowser(
-                                  'https://wa.me/91$_phone?text=$_message');
-                            })
-                          : _showMyDialog();
-                    },
-                    color: Colors.teal.withOpacity(0.1),
-                    label: Padding(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Text(
-                        'Click2Chat',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Mclaren',
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    icon: Padding(
-                      padding: EdgeInsets.only(top: 15, left: 10, bottom: 15),
-                      child: SvgPicture.asset(
-                        whatsapp,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+          SingleChildScrollView(
+            child: Container(
+              height: size.height,
+              width: size.width,
+              color: Colors.blueGrey[200],
+            ),
+          ),
+        ]),
       ),
     );
   }
